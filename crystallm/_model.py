@@ -92,18 +92,6 @@ class CausalSelfAttention(nn.Module):
         return y
 
 
-def gelu(x: Tensor) -> Tensor:
-    """
-    Implements the Gaussian Error Linear Unit (GELU) activation function, as used in the Google BERT and
-    OpenAI GPT models. See: "Gaussian Error Linear Units (GELUs)", https://arxiv.org/abs/1606.08415
-
-    :param x: the tensor to which the GELU activation function will be applied
-    :returns: the result tensor after applying the GELU activation function,
-              possessing the same shape as the input tensor
-    """
-    return 0.5 * x * (1.0 + torch.tanh(math.sqrt(2.0 / math.pi) * (x + 0.044715 * torch.pow(x, 3.0))))
-
-
 class MLP(nn.Module):
 
     def __init__(self, config: GPTConfig):
@@ -114,7 +102,7 @@ class MLP(nn.Module):
 
     def forward(self, x: Tensor) -> Tensor:
         x = self.c_fc(x)
-        x = gelu(x)
+        x = F.gelu(x)  # use PyTorch's built-in GELU
         x = self.c_proj(x)
         x = self.dropout(x)
         return x

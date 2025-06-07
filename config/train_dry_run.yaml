@@ -1,0 +1,43 @@
+# Dry run configuration
+out_dir: "out/dry_run_test"
+eval_interval: 5
+log_interval: 1
+eval_iters_train: 2 # Reduced for speed
+eval_iters_val: 2   # Reduced for speed
+eval_only: False
+always_save_checkpoint: False # Don't save checkpoints for dry run
+init_from: "scratch"
+
+# data
+dataset: "dummy_dataset" # Use the dummy dataset created
+gradient_accumulation_steps: 1 # No accumulation for simplicity
+batch_size: 2
+block_size: 64 # Needs to be smaller than dummy data length (200 tokens)
+
+# model - minimal
+n_layer: 1
+n_head: 1
+n_embd: 32 # Small embedding size
+dropout: 0.0
+bias: False
+
+# AdamW optimizer - fast settings
+learning_rate: 1e-3
+max_iters: 10 # Very few iterations
+weight_decay: 1e-1
+beta1: 0.9
+beta2: 0.95
+grad_clip: 1.0
+
+# learning rate decay settings
+decay_lr: True
+warmup_iters: 2
+lr_decay_iters: 10 # should be ~= max_iters
+min_lr: 1e-4
+
+# system
+device: "cpu" # Force CPU for this dry run
+dtype: "float32" # CPU doesn't typically benefit from bfloat16/float16 and might cause issues
+compile: False # Compile is slow for tiny models and few iterations
+validate: True # Test validation path too
+underrep_p: 0.0 # Disable underrepresentation sampling

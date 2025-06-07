@@ -202,7 +202,7 @@ if __name__ == "__main__":
     model.to(C.device)
 
     # initialize a GradScaler; if enabled=False scaler is a no-op
-    scaler = torch.cuda.amp.GradScaler(enabled=(C.dtype == "float16"))
+    scaler = torch.amp.GradScaler(device_type=device_type, enabled=(C.dtype == "float16"))
 
     optimizer = model.configure_optimizers(C.weight_decay, C.learning_rate, (C.beta1, C.beta2))
     if C.init_from == "resume":
@@ -263,8 +263,10 @@ if __name__ == "__main__":
             if (C.validate and losses["val"] < best_val_loss) or C.always_save_checkpoint:
                 best_val_loss = losses["val"] if C.validate else 0.
                 if iter_num > 0:
+                    # always save the unoptimized model parameters if compiling, otherwise it affects resuming from a checkpoint
+                    checkpoint_model = unoptimized_model if C.compile else model
                     checkpoint = {
-                        "model": model.state_dict(),
+                        "model": checkpoint_model.state_dict(),
                         "optimizer": optimizer.state_dict(),
                         "model_args": model_args,
                         "iter_num": iter_num,
