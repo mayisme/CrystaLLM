@@ -15,6 +15,7 @@ model definition, training, and inference code in this repository is adapted fro
 
 ## Table of Contents
 
+- [Quick Start for Perovskite Generation](#quick-start-for-perovskite-generation) ⭐ **NEW**
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Creating a Local Environment](#creating-a-local-environment)
@@ -42,6 +43,67 @@ model definition, training, and inference code in this repository is adapted fro
 - [Tests](#tests)
 - [Need Help?](#need-help)
 - [Citing CrystaLLM](#citing-crystallm)
+
+## Quick Start for Perovskite Generation
+
+**Want to generate stable perovskite structures quickly?** We've created easy-to-use scripts and comprehensive guides!
+
+### 🚀 One-Command Quick Start
+
+```bash
+cd examples
+./quickstart.sh
+```
+
+This will automatically:
+1. Download the perovskite model
+2. Generate sample structures (CaTiO₃, SrTiO₃, BaTiO₃)
+3. Analyze and evaluate the generated structures
+4. Create detailed reports
+
+### 📚 Available Resources
+
+- **[PEROVSKITE_GENERATION_GUIDE.md](PEROVSKITE_GENERATION_GUIDE.md)** - Comprehensive guide in Chinese (中文详细指南) covering:
+  - Detailed code architecture analysis
+  - Step-by-step generation workflows
+  - Parameter tuning for stability
+  - MCTS optimization techniques
+  - Practical examples and use cases
+
+- **[examples/](examples/)** - Ready-to-use scripts:
+  - `generate_perovskites.py` - Batch generate perovskite structures
+  - `analyze_perovskites.py` - Analyze and filter generated structures
+  - `quickstart.sh` - One-command demo
+  - See [examples/README.md](examples/README.md) for detailed usage
+
+### 🎯 Quick Example
+
+```bash
+# Generate perovskite structures
+python examples/generate_perovskites.py \
+    --model crystallm_perov_5_small \
+    --compositions "CaTiO3:Pm-3m,SrTiO3:Pm-3m" \
+    --num-samples 20 \
+    --output perovskites/
+
+# Analyze the results
+python examples/analyze_perovskites.py \
+    --input perovskites/ \
+    --output analysis/ \
+    --min-quality 80
+```
+
+### 📊 Key Features for Perovskite Generation
+
+- **Pre-trained models** optimized for perovskite structures
+- **Quality evaluation** including:
+  - Goldschmidt tolerance factor calculation
+  - Bond length reasonableness scoring
+  - Space group consistency checking
+- **Automatic filtering** to identify stable structures
+- **Batch processing** for high-throughput generation
+
+---
 
 ## Getting Started
 
