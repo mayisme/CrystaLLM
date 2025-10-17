@@ -164,3 +164,15 @@ scratches/
 saved_models/
 
 .DS_Store
+
+# Perovskite generation outputs
+quickstart_results/
+generated_perovskites/
+analysis_results/
+perovskites/
+my_perovskites/
+results/
+mcts_perovskites/
+*_perovskites/
+*.tar.gz
+*.pkl.gz
